@@ -1,0 +1,91 @@
+{
+  "production": {
+    "config_valid": true,
+    "private_env_permissions": true,
+    "secrets_forwarded_unchanged": true,
+    "loopback_host_ports_only": true,
+    "project_name": "flowpilot",
+    "provider": "ollama",
+    "test_mode": "false",
+    "llm_model": "qwen2.5:1.5b"
+  },
+  "test": {
+    "config_valid": true,
+    "private_env_permissions": true,
+    "secrets_forwarded_unchanged": true,
+    "loopback_host_ports_only": true,
+    "project_name": "flowpilot_test",
+    "provider": "fixture",
+    "test_mode": "true",
+    "llm_model": "qwen2.5:1.5b"
+  },
+  "quoting": {
+    "custom_parser_roundtrip": true,
+    "native_compose_roundtrip": true,
+    "verification_method": "config --environment parsed in memory; config --format json escapes literal dollars for serialization",
+    "cases": {
+      "mixed": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "dollars": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "trailing_backslash": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "literal_backslash_n": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "slash_quote": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "spaces": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "unicode": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      },
+      "quotes": {
+        "native_dotenv_roundtrip": true,
+        "rendered_config_literal_after_dollar_unescape": true
+      }
+    },
+    "original_bug": {
+      "reproduced_backslash_mismatch": true,
+      "expected_backslashes": 1,
+      "old_native_backslashes": 2
+    }
+  },
+  "compose_version": "v5.7.0",
+  "official_checksum_verified": true,
+  "containers_started": false,
+  "postgres_runtime_verified": false,
+  "default_model_reverification": {
+    "checked_at_utc": "2026-11-05T10:56:04.623397+00:00",
+    "backend_default": "qwen2.5:1.5b",
+    "compose_fallback": "qwen2.5:1.5b",
+    "generated_configs": {
+      "production": {
+        "bootstrap_model": "qwen2.5:1.5b",
+        "compose_api_model": "qwen2.5:1.5b",
+        "compose_worker_model": "qwen2.5:1.5b",
+        "config_valid": true
+      },
+      "test": {
+        "bootstrap_model": "qwen2.5:1.5b",
+        "compose_api_model": "qwen2.5:1.5b",
+        "compose_worker_model": "qwen2.5:1.5b",
+        "config_valid": true
+      }
+    },
+    "all_passed": true,
+    "business_logic_changed": false
+  }
+}

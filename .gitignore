@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+*.db
+*.sqlite*
+coverage/
+playwright-report/
+test-results/
+.runtime/
+artifacts/private/
+.flowpilot-env-*

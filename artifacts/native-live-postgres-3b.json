@@ -1,0 +1,70 @@
+{
+  "engine": "n8n",
+  "version": "2.46.6",
+  "executions": [
+    {
+      "id": 9,
+      "status": "error",
+      "finished": 0,
+      "startedAt": "2026-11-05 10:51:46.823",
+      "stoppedAt": "2026-11-05 10:51:51.007"
+    },
+    {
+      "id": 8,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:51:07.636",
+      "stoppedAt": "2026-11-05 10:51:46.409"
+    },
+    {
+      "id": 7,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:51:05.473",
+      "stoppedAt": "2026-11-05 10:51:05.810"
+    },
+    {
+      "id": 6,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:50:05.588",
+      "stoppedAt": "2026-11-05 10:51:04.737"
+    },
+    {
+      "id": 5,
+      "status": "error",
+      "finished": 0,
+      "startedAt": "2026-11-05 10:34:38.574",
+      "stoppedAt": "2026-11-05 10:34:42.838"
+    },
+    {
+      "id": 4,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:34:20.718",
+      "stoppedAt": "2026-11-05 10:34:37.878"
+    },
+    {
+      "id": 3,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:34:15.486",
+      "stoppedAt": "2026-11-05 10:34:15.694"
+    },
+    {
+      "id": 2,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:33:43.928",
+      "stoppedAt": "2026-11-05 10:34:14.689"
+    },
+    {
+      "id": 1,
+      "status": "crashed",
+      "finished": 0,
+      "startedAt": "2026-11-05 10:28:22.296",
+      "stoppedAt": "2026-11-05 10:33:41.140"
+    }
+  ],
+  "internal_auth_secret_found_in_execution_data": false
+}

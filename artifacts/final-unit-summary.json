@@ -1,0 +1,28 @@
+{
+  "recorded_at_utc": "2026-11-05T10:38:14.911716+00:00",
+  "result": "passed",
+  "tests": 56,
+  "passed": 56,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 21.977,
+  "database_backend": "SQLite per-test files",
+  "model_scope": "Explicit fixture adapter and synthetic local HTTP protocol responses; this suite is not real LLM quality evidence.",
+  "live_evidence_separate": [
+    "http-e2e-live-postgres.json",
+    "failure-live-postgres.json",
+    "native-live-postgres.json"
+  ],
+  "middleware_exception_boundary": {
+    "catches_exception_not_baseexception": true,
+    "control_exceptions_passthrough": {
+      "CancelledError": true,
+      "KeyboardInterrupt": true,
+      "SystemExit": true,
+      "GeneratorExit": true
+    }
+  },
+  "junit": "artifacts/pytest.xml",
+  "command": "PYTHONPATH=backend python3 -m pytest tests -q --disable-warnings --junitxml=artifacts/pytest.xml"
+}

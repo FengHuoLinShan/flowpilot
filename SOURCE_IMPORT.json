@@ -1,0 +1,13 @@
+{
+  "project": "FlowPilot",
+  "version": "1.0.0",
+  "local_archive": "Downloads/FlowPilot-v1.0.0-source.zip",
+  "archive_bytes": 297825,
+  "archive_sha256": "b4ad6f4c79400078851415b8c803db7a88a8977f06d796849829a2692279fec0",
+  "hash_scope": "Local import baseline only; no authoritative cloud SHA-256 available",
+  "archive_integrity": "ZIP CRC passed; all 111 MANIFEST.sha256 entries match",
+  "archive_safety": "112 entries; no absolute, traversal, backslash, special files, symlinks or nested .git",
+  "import_date": "2026-11-05",
+  "original_archive_preserved": true,
+  "source": "User-provided FlowPilot v1.0.0 source archive; private provenance retained locally"
+}

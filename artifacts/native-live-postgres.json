@@ -1,0 +1,42 @@
+{
+  "engine": "n8n",
+  "version": "2.46.6",
+  "executions": [
+    {
+      "id": 5,
+      "status": "error",
+      "finished": 0,
+      "startedAt": "2026-11-05 10:34:38.574",
+      "stoppedAt": "2026-11-05 10:34:42.838"
+    },
+    {
+      "id": 4,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:34:20.718",
+      "stoppedAt": "2026-11-05 10:34:37.878"
+    },
+    {
+      "id": 3,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:34:15.486",
+      "stoppedAt": "2026-11-05 10:34:15.694"
+    },
+    {
+      "id": 2,
+      "status": "success",
+      "finished": 1,
+      "startedAt": "2026-11-05 10:33:43.928",
+      "stoppedAt": "2026-11-05 10:34:14.689"
+    },
+    {
+      "id": 1,
+      "status": "crashed",
+      "finished": 0,
+      "startedAt": "2026-11-05 10:28:22.296",
+      "stoppedAt": "2026-11-05 10:33:41.140"
+    }
+  ],
+  "internal_auth_secret_found_in_execution_data": false
+}

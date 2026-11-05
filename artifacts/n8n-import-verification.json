@@ -1,0 +1,42 @@
+{
+  "recorded_at_utc": "2026-11-05T11:05:46.657511+00:00",
+  "status": "passed",
+  "scope": "Controlled Docker CLI and JavaScript fetch harness; not a real Docker deployment test.",
+  "commands": [
+    "python3 -m unittest discover -s scripts/tests -p test_import_n8n.py -v",
+    "python3 -m py_compile scripts/import-n8n.py scripts/tests/test_import_n8n.py"
+  ],
+  "tests": 6,
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0,
+  "unittest_elapsed_seconds": 0.296,
+  "python_syntax_check": "passed",
+  "checks": [
+    "Successful import/publish must remove temporary files before restarting only the n8n service and obtaining the exact readiness marker.",
+    "Cleanup failure returns nonzero and prevents restart or readiness probing.",
+    "Restart timeout returns nonzero with inspection, restart and retry commands.",
+    "Registration wait is bounded; exit code zero without the exact marker is not accepted as readiness.",
+    "Publish failure still cleans up and redacts a synthetic credential from command output.",
+    "The actual JavaScript probe accepts only HTTP401 plus error=UNAUTHORIZED; other 401 bodies,404 and200 fail. The request contains no authentication header and only an empty JSON object."
+  ],
+  "pinned_n8n_source_check": {
+    "version": "2.46.6",
+    "file": "n8n/dist/commands/publish/workflow.js",
+    "observed_behavior": "WorkflowRepository.publishVersion updates the database and the command explicitly instructs restarting a running n8n instance.",
+    "verified_against_actual_installed_package": true
+  },
+  "readiness_timeout_seconds": 120,
+  "restart_shutdown_timeout_seconds": 30,
+  "compose_restart_options_checked_against_native_cli_help": true,
+  "native_workflow_evidence_separate": [
+    "http-e2e-live-postgres.json",
+    "native-live-postgres.json",
+    "http-e2e-live-postgres-3b.json",
+    "native-live-postgres-3b.json"
+  ],
+  "docker_containers_started": false,
+  "docker_deployment_verified": false,
+  "production_credentials_used_by_tests": false,
+  "business_regression_test_count_unchanged": 56
+}

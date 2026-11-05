@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-11-05T10:49:25.800544+00:00",
+  "browser": "Chrome, controlled through CUA",
+  "origin": "http://terminal.local:4173",
+  "environment": {
+    "backend": "Actual packaged FastAPI application",
+    "database": "SQLite, preview-only persistent file",
+    "workflow_engine": "local",
+    "llm_provider": "fixture",
+    "test_mode": true,
+    "purpose": "Public-form browser compatibility and interaction; not live-model or n8n proof"
+  },
+  "status": "public_flow_passed_admin_flow_not_executed",
+  "event_id": "2d06de58-f889-49db-b73a-1d9846f953e8",
+  "checks": [
+    {
+      "name": "http_non_localhost_intake_renders_after_uuid_fix",
+      "passed": true
+    },
+    {
+      "name": "fictional_form_submission_returns_real_api_receipt",
+      "passed": true
+    },
+    {
+      "name": "duplicate_content_returns_same_event_id",
+      "passed": true
+    },
+    {
+      "name": "test_event_notice_visible",
+      "passed": true
+    },
+    {
+      "name": "english_switch_and_preference_persist",
+      "passed": true
+    },
+    {
+      "name": "anonymous_console_requires_login",
+      "passed": true
+    }
+  ],
+  "admin_browser_flow": {
+    "executed": false,
+    "reason": "Browser secure authentication guidance requires user-provided credential entry through its secure handoff. No automated password entry or authentication bypass was performed. Approval/delivery behavior was validated independently through the authenticated HTTP acceptance script."
+  },
+  "playwright_test_bodies_executed": false,
+  "limitations": [
+    "No browser proof for authenticated Dashboard, Approvals, CRM or Settings interactions.",
+    "No mobile viewport test.",
+    "Receipt verification does not assert downstream completion in the preview.",
+    "The live n8n and Ollama end-to-end results are separate reports."
+  ],
+  "screenshot_evidence": "Inspected during CUA QA; internal evidence only, not included in the delivered source archive."
+}

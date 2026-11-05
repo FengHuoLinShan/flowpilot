@@ -1,0 +1,127 @@
+{
+  "product": "FlowPilot",
+  "scope": "Frontend production build, UUID compatibility unit regressions, browser-test definition validation, and separately recorded public-intake CUA retest.",
+  "recorded_at_utc": "2026-11-05T10:47:06.698241+00:00",
+  "report_version": 2,
+  "source_of_results": "Commands actually executed by the frontend agent in this session. The production build and UUID unit regressions were executed after fixing the HTTP-context UUID failure. Previously recorded Playwright discovery and strict-TypeScript checks remain unchanged; no browser was run by this agent.",
+  "working_directory": "frontend",
+  "versions": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vite": "7.3.7",
+    "typescript": "5.9.3",
+    "tailwindcss": "4.3.4",
+    "@playwright/test": "1.64.1"
+  },
+  "production_build": {
+    "command": "npm run build",
+    "expanded_command": "tsc -b && vite build",
+    "status": "passed",
+    "exit_code": 0,
+    "vite_modules_transformed": 1651,
+    "vite_build_seconds": 2.57,
+    "index_html_reported_kb": 0.71,
+    "index_html_reported_gzip_kb": 0.49,
+    "assets": [
+      {
+        "file": "dist/assets/index-4WmuVOGE.css",
+        "bytes": 92794,
+        "sha256": "857963ab55801f1f5d1a5641a883de9fe0998837d1f5036c65cd5b7b6b6e8a1f",
+        "vite_reported_kb": 92.79,
+        "vite_reported_gzip_kb": 19.7
+      },
+      {
+        "file": "dist/assets/index-C0J13Urb.js",
+        "bytes": 448658,
+        "sha256": "697c2bcb00646c98dd27b09bea31ec705cfc656536007394aad6225763119128",
+        "vite_reported_kb": 448.66,
+        "vite_reported_gzip_kb": 139.58
+      }
+    ],
+    "notes": [
+      "Bundle sizes are the Vite output from the observed successful production build. Exact file byte counts and hashes were read when writing this report."
+    ]
+  },
+  "e2e_discovery": {
+    "command": "npm run test:e2e -- --list",
+    "expanded_command": "playwright test --list",
+    "status": "passed",
+    "exit_code": 0,
+    "test_files": 1,
+    "discovered_tests": 3,
+    "project": "chromium",
+    "tests": [
+      "real form → persisted CRM → edited approval → exactly one test outbox item",
+      "public intake can submit without disclosing admin workspace",
+      "English console renders and settings never return stored secrets"
+    ],
+    "browser_launched": false,
+    "test_bodies_executed": false,
+    "meaning": "The configuration and test definitions loaded successfully. Discovery does not prove that the browser scenarios pass."
+  },
+  "e2e_strict_typescript": {
+    "command": "npx tsc --noEmit --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --esModuleInterop playwright.config.ts e2e/flowpilot.spec.ts",
+    "status": "passed",
+    "exit_code": 0,
+    "checked_files": [
+      "playwright.config.ts",
+      "e2e/flowpilot.spec.ts"
+    ],
+    "emitted_files": false
+  },
+  "browser_validation": {
+    "status": "public_intake_retest_passed_admin_flow_not_executed",
+    "executed_by_frontend_agent": false,
+    "browser_tests_passed": null,
+    "pre_fix_failure": {
+      "observed_by": "main-agent CUA browser QA",
+      "route": "http://terminal.local:4173/intake",
+      "error": "TypeError: crypto.randomUUID is not a function",
+      "effect": "Public intake rendered a blank page in an ordinary HTTP, non-localhost context.",
+      "code_fix_status": "implemented_and_rebuilt",
+      "browser_retest_status": "passed_public_intake_and_duplicate_receipt"
+    },
+    "notes": [
+      "Public intake rendered and submitted successfully after the fix. Duplicate content returned the same event ID.",
+      "Authenticated browser workflows and Playwright test bodies were not executed; see browser-verification.json.",
+      "Production authentication was not weakened for QA."
+    ],
+    "executed_by_main_agent": true,
+    "report": "browser-verification.json"
+  },
+  "verification_boundaries": [
+    "A successful frontend build does not by itself validate API behavior, n8n execution, a real model, SMTP delivery, or full end-to-end browser behavior.",
+    "Backend and real-service integration results are reported separately by the main agent.",
+    "No runtime services or runtime configuration were changed while creating this report."
+  ],
+  "uuid_compatibility_regression": {
+    "command": "npm run test:unit",
+    "expanded_command": "node --experimental-strip-types --test tests/*.test.mjs",
+    "status": "passed",
+    "exit_code": 0,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 161.951423,
+    "test_names": [
+      "uses native randomUUID when available",
+      "HTTP-context fallback sets RFC 4122 version and variant bits",
+      "fallback uses real getRandomValues without requiring randomUUID",
+      "fails explicitly if the environment has no secure random source"
+    ],
+    "browser_launched": false,
+    "fix": {
+      "helper": "src/lib/ids.ts",
+      "strategy": "Prefer crypto.randomUUID; otherwise use crypto.getRandomValues with RFC 4122 version 4 and variant bits.",
+      "uses_math_random": false,
+      "generation_lifecycle": "Created inside the first submission attempt, retained across retries, reset only when starting another inquiry/form. Not generated during rendering.",
+      "failure_handling": "If neither secure random API exists, the submission displays an actionable form error rather than crashing during render.",
+      "updated_callers": [
+        "src/pages/PublicIntake.tsx",
+        "src/App.tsx"
+      ],
+      "runtime_configuration_changed": false
+    }
+  }
+}

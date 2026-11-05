@@ -1,0 +1,35 @@
+{
+  "product": "FlowPilot",
+  "version": "1.0.0",
+  "packaged_at_utc": "2026-11-05T11:06:36.907377+00:00",
+  "default_model": "qwen2.5:1.5b",
+  "default_model_license": "Apache-2.0; see docs/SOURCES_AND_NOTICES.md",
+  "primary_guide": "README.md",
+  "english_guide": "README.en.md",
+  "verification_record": "docs/VERIFICATION.md",
+  "verified": {
+    "python_tests": 56,
+    "webhook_node_tests": 5,
+    "uuid_unit_tests": 4,
+    "public_browser_checks": 6,
+    "n8n_import_controlled_cli_tests": 6,
+    "actual_n8n_and_ollama_http_checks_per_model": 16,
+    "commercial_default_model_run": "qwen2.5:1.5b",
+    "additional_research_evaluation_model_run": "qwen2.5:3b",
+    "live_business_database": "PGlite 0.5.15, PostgreSQL 18.6 WASM over PostgreSQL wire protocol",
+    "n8n_runtime_database": "SQLite (actual n8n CLI instance)",
+    "compose_configuration": "Parsed by official Compose CLI v5.7.0; no Docker daemon used"
+  },
+  "not_executed": [
+    "Supplied PostgreSQL 17 Docker Compose stack startup and volume restore",
+    "Native PostgreSQL concurrency regression suite and GitHub Actions execution",
+    "Real remote OpenAI-compatible provider account",
+    "External SMTP email delivery",
+    "Authenticated console browser interaction, mobile viewport, and the 3 Playwright test bodies"
+  ],
+  "omitted_from_archive": [
+    "Credentials, .env and .env.test, runtime databases, model weights",
+    "node_modules, virtual environments, build caches, superseded failed QA reports",
+    "Internal browser screenshots"
+  ]
+}

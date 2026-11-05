@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "event_id": "b95bae10-78cb-46d4-887f-6040acb1e52e",
+  "native_status": "error",
+  "preserved_error": "MODEL_INVALID_JSON",
+  "downstream_side_effects": 0,
+  "unauthenticated_webhook_http": 401
+}

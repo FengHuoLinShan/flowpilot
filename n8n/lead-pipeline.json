@@ -1,0 +1,879 @@
+{
+  "id": "flowpilotLeadPipelineV1",
+  "name": "FlowPilot — Lead processing and approved delivery",
+  "active": false,
+  "nodes": [
+    {
+      "id": "1faba810-d08e-56d3-8d57-75f72519d076",
+      "name": "Authenticated intake",
+      "type": "CUSTOM.flowPilotWebhook",
+      "typeVersion": 1,
+      "position": [
+        -1000,
+        160
+      ],
+      "parameters": {
+        "path": "flowpilot"
+      },
+      "webhookId": "108d2ed2-b990-5be4-93c6-19d272f6f6c2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "notes": "Bundled custom trigger authenticates the encrypted Header Auth credential, then emits only run_id, phase and dispatch_token. Authentication headers never enter execution history.",
+      "notesInFlow": true
+    },
+    {
+      "id": "1f340bf1-1dd2-57e2-b563-3d1609a8b528",
+      "name": "Claim execution",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -760,
+        160
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/claim' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "56ac25e4-80bd-57e0-8ac0-f2f4d76278b4",
+      "name": "Claim accepted?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -520,
+        160
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f0b8a593-b9dc-5109-9a31-b8c017c87555",
+              "leftValue": "={{ $json.proceed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "626cbfd5-5bc2-5d30-b218-9867a0078ea4",
+      "name": "Delivery phase?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -280,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e722b9b2-f279-50bd-9440-357783ba8ddb",
+              "leftValue": "={{ $json.phase }}",
+              "rightValue": "delivery",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "09027310-e7fc-5fcb-a24e-94df3d391d10",
+      "name": "Extract with LLM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/extract' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "e9c515fa-fd16-5493-af55-166849c08b4f",
+      "name": "Apply business rules",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/classify' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "a311eb7b-4e72-54dd-a91a-f18660811939",
+      "name": "Needs human correction?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "97633374-0c3b-5318-9bf4-3deb96d7868d",
+              "leftValue": "={{ $json.needs_review }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "f63d5fcb-3e0a-5cfc-8062-773b563367c4",
+      "name": "Review checkpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/finish' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "e48040cd-c6c9-57d3-86de-ac375300ac36",
+      "name": "Upsert built-in CRM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        320
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/crm' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "24901ebb-27e0-5b63-8cd1-32472a31d462",
+      "name": "Unrelated enquiry?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        940,
+        320
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ddcc2f3b-640a-50f1-8039-50f9b08f4235",
+              "leftValue": "={{ $json.irrelevant }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "95f37dd4-c913-5f85-85e4-7d4d4dc0550a",
+      "name": "Complete disqualified lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1180,
+        120
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/finish' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "a40b4056-1095-5d7d-83d2-78d515cba980",
+      "name": "Draft with LLM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1180,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/draft' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "5423e15c-aca3-558a-9583-51eb22a2475c",
+      "name": "Create approval checkpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/await_approval' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "7aeb24ce-be80-5316-aeed-104ab70c75db",
+      "name": "Deliver approved action",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        -200
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/deliver' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "f8428ffd-890c-5ec5-b8f8-71d8e8ed666a",
+      "name": "Complete delivery",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        -200
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/steps/finish' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "367c9448-2999-512a-93ca-225ad20b276b",
+      "name": "Duplicate or stale dispatch",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        560
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "761d8d09-5f0c-5947-b74a-52c4781f7cfb",
+      "name": "Record failure",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        720
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://api:8000/api/internal/executions/' + $('Authenticated intake').first().json.body.run_id + '/failure' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { phase: $('Authenticated intake').first().json.body.phase, dispatch_token: $('Authenticated intake').first().json.body.dispatch_token, n8n_execution_id: $execution.id, error_code: 'N8N_NODE_FAILED', error_message: 'A workflow service call failed after bounded retries. See the recorded backend node error.' } }}",
+        "options": {
+          "timeout": 420000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "flowpilotInternalHeader1",
+          "name": "FlowPilot internal API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "stopWorkflow"
+    },
+    {
+      "id": "a49cc2b5-088e-5a1d-8112-969585aa4030",
+      "name": "Fail native execution",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        960,
+        720
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "FlowPilot service call failed. The business execution contains sanitized recovery details."
+      }
+    },
+    {
+      "id": "74b4228d-dc47-55ff-91f9-2caaa8eb11d6",
+      "name": "Approval is a durable checkpoint",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1150,
+        -140
+      ],
+      "parameters": {
+        "height": 260,
+        "width": 560,
+        "color": 5,
+        "content": "## Human approval is mandatory\nThe pipeline ends after the approval record is committed to PostgreSQL. It does not send email.\n\nAn authenticated person edits and approves the exact draft version in FlowPilot. Only then does the server enqueue the `delivery` phase. `deliver` rechecks the persisted decision and unique delivery action.\n\nBusiness `waiting_approval` is separate from n8n's native execution status. The dashboard never invents an n8n Wait state."
+      }
+    }
+  ],
+  "connections": {
+    "Claim execution": {
+      "main": [
+        [
+          {
+            "node": "Claim accepted?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract with LLM": {
+      "main": [
+        [
+          {
+            "node": "Apply business rules",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply business rules": {
+      "main": [
+        [
+          {
+            "node": "Needs human correction?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Review checkpoint": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert built-in CRM": {
+      "main": [
+        [
+          {
+            "node": "Unrelated enquiry?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Complete disqualified lead": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft with LLM": {
+      "main": [
+        [
+          {
+            "node": "Create approval checkpoint",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create approval checkpoint": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deliver approved action": {
+      "main": [
+        [
+          {
+            "node": "Complete delivery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Complete delivery": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Record failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated intake": {
+      "main": [
+        [
+          {
+            "node": "Claim execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record failure": {
+      "main": [
+        [
+          {
+            "node": "Fail native execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim accepted?": {
+      "main": [
+        [
+          {
+            "node": "Delivery phase?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Duplicate or stale dispatch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delivery phase?": {
+      "main": [
+        [
+          {
+            "node": "Deliver approved action",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract with LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs human correction?": {
+      "main": [
+        [
+          {
+            "node": "Review checkpoint",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upsert built-in CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unrelated enquiry?": {
+      "main": [
+        [
+          {
+            "node": "Complete disqualified lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Draft with LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Shanghai",
+    "executionTimeout": 1800,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": false
+  },
+  "versionId": "49ab6802-38f9-58be-95c4-5d68d7925e76",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

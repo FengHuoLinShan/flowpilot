@@ -1,0 +1,78 @@
+{
+  "started_at": "2026-11-05T10:50:04.559787+00:00",
+  "checks": [
+    {
+      "name": "live_model_required",
+      "passed": true
+    },
+    {
+      "name": "n8n_required",
+      "passed": true
+    },
+    {
+      "name": "same_event_deduplicated",
+      "passed": true
+    },
+    {
+      "name": "crm_persisted",
+      "passed": true
+    },
+    {
+      "name": "structured_extraction",
+      "passed": true
+    },
+    {
+      "name": "rule_reasons_recorded",
+      "passed": true
+    },
+    {
+      "name": "node_history_persisted",
+      "passed": true
+    },
+    {
+      "name": "real_n8n_execution_id",
+      "passed": true
+    },
+    {
+      "name": "nothing_sent_before_approval",
+      "passed": true
+    },
+    {
+      "name": "repeat_approval_safe",
+      "passed": true
+    },
+    {
+      "name": "exactly_one_test_message",
+      "passed": true
+    },
+    {
+      "name": "edited_draft_delivered",
+      "passed": true
+    },
+    {
+      "name": "native_n8n_success_observed",
+      "passed": true
+    },
+    {
+      "name": "same_contact_matched",
+      "passed": true
+    },
+    {
+      "name": "rejection_recorded",
+      "passed": true
+    },
+    {
+      "name": "rejection_sends_nothing",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "runtime": {
+    "engine": "n8n",
+    "llm_provider": "ollama",
+    "llm_model": "qwen2.5:3b",
+    "test_mode": true
+  },
+  "event_id": "8edbec1a-7531-482c-8b29-f513f8c2388c",
+  "finished_at": "2026-11-05T10:51:46.520850+00:00"
+}

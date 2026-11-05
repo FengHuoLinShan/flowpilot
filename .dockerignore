@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+__pycache__
+**/__pycache__
+**/.pytest_cache
+**/node_modules
+**/dist
+*.zip
+*.db
+*.sqlite*
+.runtime
+artifacts

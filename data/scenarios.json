@@ -1,0 +1,152 @@
+[
+  {
+    "row": 1,
+    "scenario": "正常询价",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 2,
+    "scenario": "高优先级",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 3,
+    "scenario": "重复联系人、新需求",
+    "expected": "Reuse contact; create distinct event and lead"
+  },
+  {
+    "row": 4,
+    "scenario": "完全重复输入",
+    "expected": "Return original event, no extra CRM side effect"
+  },
+  {
+    "row": 5,
+    "scenario": "缺失联系方式",
+    "expected": "needs_review; no outbound email"
+  },
+  {
+    "row": 6,
+    "scenario": "缺失姓名",
+    "expected": "Review missing identity or ask for clarification"
+  },
+  {
+    "row": 7,
+    "scenario": "预算未确定",
+    "expected": "Preserve null; never invent a budget"
+  },
+  {
+    "row": 8,
+    "scenario": "无关咨询",
+    "expected": "Disqualify according to business rules; no sales email"
+  },
+  {
+    "row": 9,
+    "scenario": "招聘咨询",
+    "expected": "Unrelated/support route as documented rules decide"
+  },
+  {
+    "row": 10,
+    "scenario": "提示词注入",
+    "expected": "Untrusted text cannot authorize sending or override code rules"
+  },
+  {
+    "row": 11,
+    "scenario": "英文询价",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 12,
+    "scenario": "外币预算",
+    "expected": "Keep currency; do not silently assume currency equivalence"
+  },
+  {
+    "row": 13,
+    "scenario": "大客户、需范围确认",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 14,
+    "scenario": "小预算",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 15,
+    "scenario": "主体与预算不确定",
+    "expected": "Flag ambiguities; request human correction"
+  },
+  {
+    "row": 16,
+    "scenario": "大小写邮箱重复联系人",
+    "expected": "Normalized email matches existing contact"
+  },
+  {
+    "row": 17,
+    "scenario": "模型一次超时",
+    "expected": "Explicit test-only injected timeout, bounded retry and recovery"
+  },
+  {
+    "row": 18,
+    "scenario": "模型非法 JSON",
+    "expected": "Schema rejection; actionable failure, no CRM pollution"
+  },
+  {
+    "row": 19,
+    "scenario": "CRM 一次失败",
+    "expected": "Retry; exactly one contact/lead/task side effect"
+  },
+  {
+    "row": 20,
+    "scenario": "CRM 持续失败",
+    "expected": "Bounded failure; visible manual recovery"
+  },
+  {
+    "row": 21,
+    "scenario": "非法邮箱",
+    "expected": "Reject at intake; no execution or CRM mutation"
+  },
+  {
+    "row": 22,
+    "scenario": "空消息",
+    "expected": "Reject at intake; no execution or CRM mutation"
+  },
+  {
+    "row": 23,
+    "scenario": "非法负预算",
+    "expected": "Reject at intake; no execution or CRM mutation"
+  },
+  {
+    "row": 24,
+    "scenario": "售后工单式咨询",
+    "expected": "Classify using explicit rules; no fabricated external ticket"
+  },
+  {
+    "row": 25,
+    "scenario": "仓储企业线索",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 26,
+    "scenario": "英文审批要求",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 27,
+    "scenario": "缺失公司",
+    "expected": "Preserve missing company; review as required by the rule set"
+  },
+  {
+    "row": 28,
+    "scenario": "跨境电商高优先级",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 29,
+    "scenario": "教育机构",
+    "expected": "Human approval before any delivery"
+  },
+  {
+    "row": 30,
+    "scenario": "本地模型私有化",
+    "expected": "Human approval before any delivery"
+  }
+]
