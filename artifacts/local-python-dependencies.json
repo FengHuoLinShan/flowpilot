@@ -1,0 +1,251 @@
+[
+  {
+    "name": "annotated-doc",
+    "version": "0.0.5",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ]
+  },
+  {
+    "name": "anyio",
+    "version": "4.16.0",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "certifi",
+    "version": "2026.10.23",
+    "license_expression": null,
+    "license": "MPL-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+    ]
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "license_expression": "MIT-0",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "click",
+    "version": "8.5.0",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "license_expression": "Apache-2.0 OR BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "dnspython",
+    "version": "2.9.2",
+    "license_expression": "ISC",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "email-validator",
+    "version": "2.3.0",
+    "license_expression": null,
+    "license": "Unlicense",
+    "classifiers": [
+      "License :: OSI Approved :: The Unlicense (Unlicense)"
+    ]
+  },
+  {
+    "name": "fastapi",
+    "version": "0.162.0",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "license_expression": null,
+    "license": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ]
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ]
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "license_expression": null,
+    "license": "BSD-3-Clause",
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ]
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "iniconfig",
+    "version": "2.3.1",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "opentelemetry-api",
+    "version": "1.45.2",
+    "license_expression": "Apache-2.0",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "license_expression": "Apache-2.0 OR BSD-2-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "pluggy",
+    "version": "1.7.0",
+    "license_expression": null,
+    "license": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ]
+  },
+  {
+    "name": "psycopg",
+    "version": "3.3.8",
+    "license_expression": "LGPL-3.0-only",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "psycopg-binary",
+    "version": "3.3.8",
+    "license_expression": "LGPL-3.0-only",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "pycparser",
+    "version": "3.12",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "pydantic",
+    "version": "2.14.1",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.50.1",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "Pygments",
+    "version": "2.21.0",
+    "license_expression": "BSD-2-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "pytest",
+    "version": "9.2.0",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "python-multipart",
+    "version": "0.0.33",
+    "license_expression": "Apache-2.0",
+    "license": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ]
+  },
+  {
+    "name": "socksio",
+    "version": "1.0.0",
+    "license_expression": null,
+    "license": "UNKNOWN",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ]
+  },
+  {
+    "name": "SQLAlchemy",
+    "version": "2.1.8",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "starlette",
+    "version": "1.10.0",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.5",
+    "license_expression": "MIT",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "license_expression": "PSF-2.0",
+    "license": null,
+    "classifiers": []
+  },
+  {
+    "name": "tzdata",
+    "version": "2026.5",
+    "license_expression": null,
+    "license": "Apache-2.0",
+    "classifiers": []
+  },
+  {
+    "name": "uvicorn",
+    "version": "0.54.0",
+    "license_expression": "BSD-3-Clause",
+    "license": null,
+    "classifiers": []
+  }
+]

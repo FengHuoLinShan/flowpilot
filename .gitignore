@@ -15,3 +15,7 @@ test-results/
 .runtime/
 artifacts/private/
 .flowpilot-env-*
+
+# Local dependency caches and TypeScript incremental output
+.npm-cache/
+*.tsbuildinfo

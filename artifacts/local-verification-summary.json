@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-05",
+  "source_baseline_commit": "faab6ab488194283ded4d8d0459881803bece845",
+  "python": "3.12.7",
+  "node": "22.22.3",
+  "sqlite_pytest": {
+    "passed": 56,
+    "warnings": 1
+  },
+  "postgres17_pytest": {
+    "passed": 56,
+    "warnings": 1,
+    "disposable_container_removed": true
+  },
+  "n8n_import_controlled_tests": {
+    "passed": 6
+  },
+  "webhook_tests": {
+    "passed": 5
+  },
+  "frontend_unit_tests": {
+    "passed": 4
+  },
+  "frontend_typecheck": "passed",
+  "frontend_build": "passed",
+  "http_checks": {
+    "passed": 12,
+    "engine": "local",
+    "model_provider": "fixture",
+    "database": "sqlite",
+    "smtp_enabled": false
+  },
+  "playwright": {
+    "passed": 3,
+    "browser": "chromium",
+    "engine": "local",
+    "model_provider": "fixture"
+  },
+  "business_code_fixes": [],
+  "maintenance_changes": [
+    "ignore local npm cache",
+    "ignore TypeScript build info",
+    "source and local handoff records"
+  ],
+  "not_executed": [
+    "Full Docker Compose stack",
+    "Real n8n instance import and execution",
+    "Real model acceptance",
+    "External SMTP",
+    "Mobile/full-console browser regression",
+    "Binary/container redistribution notice completeness"
+  ]
+}
